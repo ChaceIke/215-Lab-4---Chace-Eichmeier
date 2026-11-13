@@ -6,7 +6,7 @@
 
 // The use of a template class allows the user to create a self-ordered list of any data type. The SelfOrderedList class inherits from the SelfOrderedListADT abstract class and implements its pure virtual functions. The class uses a linked list to store the elements and maintains a count of comparisons made during searches.
 template <typename E>
-class SelfOrderedList : public SelfOrderedListADT<E> {
+class selfOrderedList : public SelfOrderedListADT<E> {
 private:
 
     // The Record struct is used to store each element in the list along with its frequency of access. The frequency is incremented each time the element is accessed, which can be used for self-ordering heuristics.
@@ -21,7 +21,7 @@ private:
     };
 
     // The list of records is stored in a linked list. The mutable keyword allows the list to be modified even in const member functions, which is necessary for the search function that may reorder the list.
-    mutable Llist<Record> records;
+    mutable LList<Record> records;
     // The comparisons variable keeps track of the number of comparisons made during searches. This is useful for analyzing the efficiency of the self-ordering heuristics.
     int comparisons = 0;
 
@@ -44,11 +44,11 @@ public:
 
     // The printList function prints the entire list of records. It calls the printList function of the underlying linked list, which iterates through the records and outputs their values and frequencies.
     void printlist() const override {
-        records.printList();
+        printlist(size());
     }
 
     // The printList function prints the first n records in the list. If n is greater than the size of the list, it prints all records.
-    void printList(int n) const override {
+    void printlist(int n) const override {
         int limit =(n < size()) ? n : size();
 
         for (int i = 0; i < limit; i++) {
@@ -56,20 +56,21 @@ public:
 
             const Record& record = records.getValue();
 
-            std::cout << "Value: " << record.value << ", Frequency: " << record.frequency << std::endl;
+            std::cout << record.value << "-" << record.frequency << " ";
         }
 
         std::cout << std::endl;
 
     }
     
+    // The search function looks for an element in the list. If the element is found, it increments its frequency and reorders the list based on the self-ordering heuristic (in this case, frequency). If the element is not found, it adds the new element to the list. The function also increments the comparisons count for each comparison made during the search.
     bool search(const E& it) override {
         for (int i = 0; i < records.length(); i++) {
             records.moveToPos(i);
             comparisons++; // Increment the comparison count for each comparison made
 
-            if (record.value == it) {
-                records.remove(); // Remove the found record from its current position
+            if (records.getValue().value == it) {
+                Record record = records.remove(); // Remove the found record from the list
                 record.frequency++; // Increment the frequency of access for the found record
                 records.insert(record); // Reinsert the record to maintain the order based on frequency
                 return true; // Return true if the item is found

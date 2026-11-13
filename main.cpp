@@ -1,15 +1,22 @@
 #include "llist.h"
+#include "selfOrderedList.h"
 
 int main() {
 
-    LList<char> list;
+    selfOrderedList<char> list;
 
     for (char c = 'A'; c <= 'H'; c++) {
-        list.append(c);
+        list.addIt(c);
     }
 
-    cout << "List Size: " << list.length() << endl;
+    list.search('C');
+    list.search('E');
+    list.search('G');
 
-    list.moveToPos(2);
-    cout << "Current Element at Position 2: " << list.getValue() << endl;
+    std::cout << "Size of the list: " << list.size() << std::endl;
+    std::cout << "Number of comparisons made: " << list.getCompares() << std::endl;
+
+    list.printlist();
+
+    return 0;
 }
