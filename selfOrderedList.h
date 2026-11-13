@@ -4,10 +4,19 @@
 #include "llist.h"
 #include <iostream>
 
+
+enum class Heuristic {
+    moveToFront,
+    Transpose,
+    Count
+};
+
 // The use of a template class allows the user to create a self-ordered list of any data type. The SelfOrderedList class inherits from the SelfOrderedListADT abstract class and implements its pure virtual functions. The class uses a linked list to store the elements and maintains a count of comparisons made during searches.
 template <typename E>
 class selfOrderedList : public SelfOrderedListADT<E> {
 private:
+
+    Heuristic heuristic;
 
     // The Record struct is used to store each element in the list along with its frequency of access. The frequency is incremented each time the element is accessed, which can be used for self-ordering heuristics.
     struct Record {
@@ -26,6 +35,8 @@ private:
     int comparisons = 0;
 
 public:
+
+    selfOrderedList(Heuristic h) : heuristic(h) {};
 
     // The addIt function adds a new element to the list. It creates a new Record for the element and appends it to the records list. This function is called when an element is not found during a search, allowing the list to grow dynamically.
     void addIt(const E& it) override {
@@ -71,19 +82,32 @@ public:
 
             if (records.getValue().value == it) {
                 Record record = records.remove(); // Remove the found record from the list
-                record.frequency++; // Increment the frequency of access for the found record
-                records.moveToStart(); //
-                records.insert(record); // Reinsert the record to maintain the order based on frequency
+                record.frequency++;
+
+                if (heuristic == Heuristic::moveToFront) {
+                    records.moveToStart();
+                } else if (heuristic == Heuristic::Transpose) {
+                    if (i > 0) {
+                        records.moveToPos(i - 1);
+                    } else {
+                        records.moveToStart();
+                    }
+                }
+
+                records.insert(record);
+
                 return true; // Return true if the item is found
             }
         }
         addIt(it); // If the item is not found, add it to the list
 
+
+        if (heuristic == Heuristic::moveToFront) {
         records.moveToPos(records.length() - 1);
         Record record = records.remove();
-        
         records.moveToStart();
         records.insert(record);
+        }
 
         return false; // Return false if the item is not found
     }

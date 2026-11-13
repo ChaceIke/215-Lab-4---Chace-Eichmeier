@@ -3,7 +3,8 @@
 
 int main() {
 
-    selfOrderedList<char> list;
+    // selfOrderedList<char> list(Heuristic::moveToFront);
+    selfOrderedList<char> list(Heuristic::Transpose);
 
     for (char c = 'A'; c <= 'H'; c++) {
         list.addIt(c);
