@@ -3,10 +3,14 @@
 #include <fstream>
 #include <string>
 
+// Function to read records from a file and populate the self-ordered list
 int main() {
 
+	// Create a self-ordered list with the moveToFront heuristic
     selfOrderedList<char> list1(Heuristic::moveToFront);
+	// Create a self-ordered list with the Transpose heuristic
     selfOrderedList<char> list2(Heuristic::Transpose);
+	// Create a self-ordered list with the Count heuristic
     selfOrderedList<char> list3(Heuristic::Count);
 
     for (char c = 'A'; c <= 'H'; c++) {
@@ -15,6 +19,7 @@ int main() {
         list3.addIt(c);
     }
 
+	// Establish which searches to perform.
     const char searches[] = {
         'F', 'D', 'F', 'G', 'E', 'G', 'F',
         'A', 'D', 'F', 'G', 'E', 'H', 'I'
@@ -26,6 +31,7 @@ int main() {
         list3.search(c);
     }
 
+	// Print the results for each heuristic
     std::cout << "Move to Front Heuristic:" << std::endl;
     std::cout << "Size of the list: " << list1.size() << std::endl;
     std::cout << "Number of comparisons made: " << list1.getCompares() << std::endl;
