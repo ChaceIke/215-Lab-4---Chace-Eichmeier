@@ -9,9 +9,14 @@ int main() {
         list.addIt(c);
     }
 
-    list.search('C');
-    list.search('E');
-    list.search('G');
+    const char searches[] = {
+        'F', 'D', 'F', 'G', 'E', 'G', 'F',
+        'A', 'D', 'F', 'G', 'E', 'H', 'I'
+    };
+
+    for (char c : searches) {
+        list.search(c);
+    }
 
     std::cout << "Size of the list: " << list.size() << std::endl;
     std::cout << "Number of comparisons made: " << list.getCompares() << std::endl;

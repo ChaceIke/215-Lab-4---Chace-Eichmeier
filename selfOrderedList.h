@@ -72,11 +72,19 @@ public:
             if (records.getValue().value == it) {
                 Record record = records.remove(); // Remove the found record from the list
                 record.frequency++; // Increment the frequency of access for the found record
+                records.moveToStart(); //
                 records.insert(record); // Reinsert the record to maintain the order based on frequency
                 return true; // Return true if the item is found
             }
         }
         addIt(it); // If the item is not found, add it to the list
+
+        records.moveToPos(records.length() - 1);
+        Record record = records.remove();
+        
+        records.moveToStart();
+        records.insert(record);
+
         return false; // Return false if the item is not found
     }
 
