@@ -1,0 +1,27 @@
+Move to Front Heuristic:
+Size of the list: 9
+Number of comparisons made: 70
+Transpose Heuristic:
+Size of the list: 9
+Number of comparisons made: 78
+Count Heuristic:
+Size of the list: 9
+Number of comparisons made: 61
+I-0 H-1 E-2 G-3 F-4 D-2 A-1 B-0 C-0 
+A-1 B-0 F-4 D-2 G-3 E-2 H-1 C-0 I-0 
+F-4 G-3 D-2 E-2 A-1 H-1 B-0 C-0 I-0 
+
+String Test - Move to Front:
+Total words: 214
+Comparisons: 34237
+them-0 for-8 credit-5 any-7 receive-4 not-7 will-6 you-19 and-9 unimplemented-0 
+
+String Test - Transpose: 
+Total words: 214
+Comparisons: 42897
+and-9 the-43 may-4 two-2 twenty-3 thousand-1 six-1 list-9 fourth-0 january-0 
+
+String Test - Count:
+Total words: 214
+Comparisons: 34574
+the-43 to-20 you-19 of-17 your-13 list-9 i-9 and-9 in-8 for-8 

@@ -1,5 +1,7 @@
 #include "llist.h"
 #include "selfOrderedList.h"
+#include <fstream>
+#include <string>
 
 int main() {
 
@@ -39,6 +41,41 @@ int main() {
     list1.printlist();
     list2.printlist();
     list3.printlist();
+
+    // String tests using test.txt
+    selfOrderedList<std::string> stringList1(Heuristic::moveToFront);
+    selfOrderedList<std::string> stringList2(Heuristic::Transpose);
+    selfOrderedList<std::string> stringList3(Heuristic::Count);
+
+    std::ifstream inputFile("test.txt");
+
+    if (!inputFile.is_open()) {
+        std::cout << "Error opening test.txt" << std::endl;
+        return 1;
+    }
+
+    std::string word;
+
+    while (inputFile >> word) {
+        stringList1.search(word);
+        stringList2.search(word);
+        stringList3.search(word);
+    }
+
+    std::cout << "\nString Test - Move to Front:" << std::endl;
+    std::cout << "Total words: " << stringList1.size() << std::endl;
+    std::cout << "Comparisons: " << stringList1.getCompares() << std::endl;
+    stringList1.printlist(10);
+
+    std::cout << "\nString Test - Transpose: " << std::endl;
+    std::cout << "Total words: " << stringList2.size() << std::endl;
+    std::cout << "Comparisons: " << stringList2.getCompares() << std::endl;
+    stringList2.printlist(10);
+
+    std::cout << "\nString Test - Count:" << std::endl;
+    std::cout << "Total words: " << stringList3.size() << std::endl;
+    std::cout << "Comparisons: " << stringList3.getCompares() << std::endl;
+    stringList3.printlist(10);
 
     return 0;
 }
