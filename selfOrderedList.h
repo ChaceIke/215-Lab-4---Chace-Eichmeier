@@ -27,4 +27,56 @@ private:
 
 public:
 
+    // The addIt function adds a new element to the list. It creates a new Record for the element and appends it to the records list. This function is called when an element is not found during a search, allowing the list to grow dynamically.
+    void addIt(const E& it) override {
+        records.append(Record(it));
+    }
+
+    // The size function returns the number of elements in the list. It simply calls the length function of the underlying linked list to get the current size.
+    int size() const override {
+        return records.length();
+    }
+
+    // The getCompares function returns the number of comparisons made during searches. This allows users to analyze the performance of the self-ordering heuristics implemented in the search function.
+    int getCompares() const override {
+        return comparisons;
+    }
+
+    // The printList function prints the entire list of records. It calls the printList function of the underlying linked list, which iterates through the records and outputs their values and frequencies.
+    void printlist() const override {
+        records.printList();
+    }
+
+    // The printList function prints the first n records in the list. If n is greater than the size of the list, it prints all records.
+    void printList(int n) const override {
+        int limit =(n < size()) ? n : size();
+
+        for (int i = 0; i < limit; i++) {
+            records.moveToPos(i);
+
+            const Record& record = records.getValue();
+
+            std::cout << "Value: " << record.value << ", Frequency: " << record.frequency << std::endl;
+        }
+
+        std::cout << std::endl;
+
+    }
+    
+    bool search(const E& it) override {
+        for (int i = 0; i < records.length(); i++) {
+            records.moveToPos(i);
+            comparisons++; // Increment the comparison count for each comparison made
+
+            if (record.value == it) {
+                records.remove(); // Remove the found record from its current position
+                record.frequency++; // Increment the frequency of access for the found record
+                records.insert(record); // Reinsert the record to maintain the order based on frequency
+                return true; // Return true if the item is found
+            }
+        }
+        addIt(it); // If the item is not found, add it to the list
+        return false; // Return false if the item is not found
+    }
+
 };
