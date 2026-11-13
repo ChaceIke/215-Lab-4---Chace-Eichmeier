@@ -4,7 +4,8 @@
 int main() {
 
     // selfOrderedList<char> list(Heuristic::moveToFront);
-    selfOrderedList<char> list(Heuristic::Transpose);
+    // selfOrderedList<char> list(Heuristic::Transpose);
+    selfOrderedList<char> list(Heuristic::Count);
 
     for (char c = 'A'; c <= 'H'; c++) {
         list.addIt(c);

@@ -84,19 +84,33 @@ public:
                 Record record = records.remove(); // Remove the found record from the list
                 record.frequency++;
 
-                if (heuristic == Heuristic::moveToFront) {
+            if (heuristic == Heuristic::moveToFront) {
+                records.moveToStart();
+
+            } else if (heuristic == Heuristic::Transpose) {
+                if (i > 0) {
+                    records.moveToPos(i - 1);
+                } else {
                     records.moveToStart();
-                } else if (heuristic == Heuristic::Transpose) {
-                    if (i > 0) {
-                        records.moveToPos(i - 1);
-                    } else {
-                        records.moveToStart();
+                }
+
+            } else if (heuristic == Heuristic::Count) {
+                int newPos = i;
+
+                for (int j = 0; j < i; j++) {
+                    records.moveToPos(j);
+
+                    if (records.getValue().frequency < record.frequency) {
+                        newPos = j;
+                        break;
                     }
                 }
 
-                records.insert(record);
+                records.moveToPos(newPos);
+            }
 
-                return true; // Return true if the item is found
+            records.insert(record);
+            return true;
             }
         }
         addIt(it); // If the item is not found, add it to the list
